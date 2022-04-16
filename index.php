@@ -6,7 +6,7 @@ use Strategy\Lecture as Lecture;
 use Strategy\TimeCostStrategy as TimeCostStrategy;
 use Strategy\FixedCostStrategy as FixedCostStrategy;
 use Singleton\Preferences as Preferences;
-
+/*
 //Strategy
 $lessons[] = new Seminar(4, new TimeCostStrategy());
 $lessons[] = new Lecture(4, new FixedCostStrategy());
@@ -43,5 +43,6 @@ print_r($planet1->getForest() ) ;
 $app = ServiceLocator\AppConfig::getInstance();
 $manager = $app->getCommsManager();
 echo $manager->getApptEncoder()->encode();
-
-
+*/
+$data = simplexml_load_file('./DI/objects.xml');
+print_r($data->class);
