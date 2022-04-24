@@ -1,11 +1,17 @@
 <?php
 spl_autoload_register();
 
+define('ROOT', $_SERVER['DOCUMENT_ROOT']);
+require_once "DI/ObjectAssembler.php";
+
 use Strategy\Seminar as Seminar;
 use Strategy\Lecture as Lecture;
 use Strategy\TimeCostStrategy as TimeCostStrategy;
 use Strategy\FixedCostStrategy as FixedCostStrategy;
 use Singleton\Preferences as Preferences;
+use ServiceLocator\BloggsApptEncoder as BloggsApptEncoder;
+use DI\AppointmentMaker2 as AppointmentMaker2;
+
 /*
 //Strategy
 $lessons[] = new Seminar(4, new TimeCostStrategy());
@@ -44,5 +50,8 @@ $app = ServiceLocator\AppConfig::getInstance();
 $manager = $app->getCommsManager();
 echo $manager->getApptEncoder()->encode();
 */
-$data = simplexml_load_file('./DI/objects.xml');
-print_r($data->class);
+
+$assembler = new ObjectAssembler("./DI/objects.xml");
+$apptmaker = $assembler->getComponent("\DI\AppointmentMaker2");
+$out = $apptmaker->makeAppointment();
+print $out;
