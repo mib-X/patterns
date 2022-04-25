@@ -1,7 +1,6 @@
 <?php
 spl_autoload_register();
 
-define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 require_once "DI/ObjectAssembler.php";
 
 use Strategy\Seminar as Seminar;
@@ -11,6 +10,8 @@ use Strategy\FixedCostStrategy as FixedCostStrategy;
 use Singleton\Preferences as Preferences;
 use ServiceLocator\BloggsApptEncoder as BloggsApptEncoder;
 use DI\AppointmentMaker2 as AppointmentMaker2;
+use Strategy2\TextQuestion as TextQuestion;
+use Strategy2\MatchMarker as MatchMarker;
 
 /*
 //Strategy
@@ -49,9 +50,23 @@ print_r($planet1->getForest() ) ;
 $app = ServiceLocator\AppConfig::getInstance();
 $manager = $app->getCommsManager();
 echo $manager->getApptEncoder()->encode();
-*/
 
+//DI
 $assembler = new ObjectAssembler("./DI/objects.xml");
 $apptmaker = $assembler->getComponent("\DI\AppointmentMaker2");
 $out = $apptmaker->makeAppointment();
 print $out;
+*/
+
+//Strategy2
+$question = new TextQuestion('Сколько золотых мячей у Месси?', new MatchMarker('6'));
+$question1 = new TextQuestion('Сколько золотых мячей у Месси?', new \Strategy2\RegexMarker('/S.x/i'));
+$response = [5, 6, 'Sex', 'six'];
+foreach ($response as $value){
+    echo  'response:' . $value;
+    if ($question1->mark($value) || $question->mark($value)) {
+        echo " - Right; ";
+    } else {
+        echo " - Wrong; ";
+    }
+}
