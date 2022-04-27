@@ -59,14 +59,32 @@ print $out;
 */
 
 //Strategy2
-$question = new TextQuestion('Сколько золотых мячей у Месси?', new MatchMarker('6'));
-$question1 = new TextQuestion('Сколько золотых мячей у Месси?', new \Strategy2\RegexMarker('/S.x/i'));
-$response = [5, 6, 'Sex', 'six'];
-foreach ($response as $value){
-    echo  'response:' . $value;
-    if ($question1->mark($value) || $question->mark($value)) {
-        echo " - Right; ";
-    } else {
-        echo " - Wrong; ";
-    }
-}
+//$question = new TextQuestion('Сколько золотых мячей у Месси?', new MatchMarker('6'));
+//$question1 = new TextQuestion('Сколько золотых мячей у Месси?', new \Strategy2\RegexMarker('/S.x/i'));
+//$response = [5, 6, 'Sex', 'six'];
+//foreach ($response as $value){
+//    echo  'response:' . $value;
+//    if ($question1->mark($value) || $question->mark($value)) {
+//        echo " - Right; ";
+//    } else {
+//        echo " - Wrong; ";
+//    }
+//}
+
+//Composite
+
+$newArmy = new \Composite\Army();
+$newArmy->addUnit(new \Composite\Archer());
+$newArmy->addUnit(new \Composite\LaserCannon());
+$newArmy->addUnit(new \Composite\Archer());
+$subArmy = new \Composite\Army();
+$subArmy->addUnit(new \Composite\LaserCannon());
+$subArmy->addUnit(new \Composite\Archer());
+echo $newArmy->bombardStrength();
+echo $subArmy->bombardStrength();
+$newArmy->addUnit($subArmy);
+echo $newArmy->bombardStrength();
+$newArmy->removeUnit($subArmy);
+echo $newArmy->bombardStrength();
+
+
