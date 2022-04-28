@@ -3,6 +3,9 @@ spl_autoload_register();
 
 require_once "DI/ObjectAssembler.php";
 
+use Decorate\DiamondDecorator;
+use Decorate\Plains;
+use Decorate\PollutedDecorator;
 use Strategy\Seminar as Seminar;
 use Strategy\Lecture as Lecture;
 use Strategy\TimeCostStrategy as TimeCostStrategy;
@@ -56,20 +59,20 @@ $assembler = new ObjectAssembler("./DI/objects.xml");
 $apptmaker = $assembler->getComponent("\DI\AppointmentMaker2");
 $out = $apptmaker->makeAppointment();
 print $out;
-*/
+
 
 //Strategy2
-//$question = new TextQuestion('Сколько золотых мячей у Месси?', new MatchMarker('6'));
-//$question1 = new TextQuestion('Сколько золотых мячей у Месси?', new \Strategy2\RegexMarker('/S.x/i'));
-//$response = [5, 6, 'Sex', 'six'];
-//foreach ($response as $value){
-//    echo  'response:' . $value;
-//    if ($question1->mark($value) || $question->mark($value)) {
-//        echo " - Right; ";
-//    } else {
-//        echo " - Wrong; ";
-//    }
-//}
+$question = new TextQuestion('Сколько золотых мячей у Месси?', new MatchMarker('6'));
+$question1 = new TextQuestion('Сколько золотых мячей у Месси?', new \Strategy2\RegexMarker('/S.x/i'));
+$response = [5, 6, 'Sex', 'six'];
+foreach ($response as $value){
+    echo  'response:' . $value;
+    if ($question1->mark($value) || $question->mark($value)) {
+        echo " - Right; ";
+    } else {
+        echo " - Wrong; ";
+    }
+}
 
 //Composite
 
@@ -86,5 +89,9 @@ $newArmy->addUnit($subArmy);
 echo $newArmy->bombardStrength();
 $newArmy->removeUnit($subArmy);
 echo $newArmy->bombardStrength();
+*/
 
+//Decorator
 
+$plains = new PollutedDecorator(new DiamondDecorator(new Plains()));
+echo $plains->getWealthFactor();
