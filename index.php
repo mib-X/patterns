@@ -15,6 +15,12 @@ use ServiceLocator\BloggsApptEncoder as BloggsApptEncoder;
 use DI\AppointmentMaker2 as AppointmentMaker2;
 use Strategy2\TextQuestion as TextQuestion;
 use Strategy2\MatchMarker as MatchMarker;
+use Visitor\Archer;
+use Visitor\Army;
+use Visitor\Cavalry;
+use Visitor\LaserCannon;
+use Visitor\TaxArmyVisitor;
+use Visitor\TextDumpArmyVisitor;
 
 /*
 //Strategy
@@ -89,9 +95,24 @@ $newArmy->addUnit($subArmy);
 echo $newArmy->bombardStrength();
 $newArmy->removeUnit($subArmy);
 echo $newArmy->bombardStrength();
-*/
+
 
 //Decorator
 
 $plains = new PollutedDecorator(new DiamondDecorator(new Plains()));
 echo $plains->getWealthFactor();
+
+*/
+//Visitor
+$main_army = new Army();
+$main_army->addUnit( new Archer() );
+$main_army->addUnit( new LaserCannon() );
+$main_army->addUnit( new Cavalry() );
+$textdump = new TextDumpArmyVisitor();
+$tax = new TaxArmyVisitor();
+$main_army->accept( $textdump );
+$main_army->accept( $tax );
+print $textdump->getText();
+print "ИТОГО: ";
+echo $tax->getTax(). "\n";
+print $tax->getReport();
