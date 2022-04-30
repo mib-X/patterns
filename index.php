@@ -3,6 +3,7 @@ spl_autoload_register();
 
 require_once "DI/ObjectAssembler.php";
 
+use Command\Controller;
 use Decorate\DiamondDecorator;
 use Decorate\Plains;
 use Decorate\PollutedDecorator;
@@ -102,7 +103,7 @@ echo $newArmy->bombardStrength();
 $plains = new PollutedDecorator(new DiamondDecorator(new Plains()));
 echo $plains->getWealthFactor();
 
-*/
+
 //Visitor
 $main_army = new Army();
 $main_army->addUnit( new Archer() );
@@ -116,3 +117,13 @@ print $textdump->getText();
 print "ИТОГО: ";
 echo $tax->getTax(). "\n";
 print $tax->getReport();
+*/
+
+//Command
+$controller = new Controller ();
+$context = $controller->getContext();
+$context->addParam('action', 'login' );
+$context->addParam('username', 'mib' );
+$context->addParam('pass', '7345519' );
+$controller->process () ;
+print $context->getError();
