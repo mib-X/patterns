@@ -117,9 +117,9 @@ print $textdump->getText();
 print "ИТОГО: ";
 echo $tax->getTax(). "\n";
 print $tax->getReport();
-*/
 
-//Command
+
+//Command in frontController example
 $controller = new Controller ();
 $context = $controller->getContext();
 $context->addParam('action', 'login' );
@@ -127,3 +127,8 @@ $context->addParam('username', 'mib' );
 $context->addParam('pass', '7345519' );
 $controller->process () ;
 print $context->getError();
+
+*/
+
+//FrontController
+\FrontController\Controller::run();
